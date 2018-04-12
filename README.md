@@ -1,6 +1,6 @@
-# Deep-Learning-on-MNIST-Data
+# Hand-written-Images-Recognition-MNIST-data
 
-Creating a Neural Network on MNIST data (hand written images).
+Recognozing Hand written Images-MNIST Data.
 
 (Learning the concepts from "R Deep Learning Essentials")
 
