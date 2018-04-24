@@ -3,7 +3,7 @@ sample = sample(1:nrow(data),1)
 pic = data[sample,-1]
 
 m = matrix(0,28,28)
-
+ 
 # Generating a picture out of those 784 columns
 for(i in 1:28){
   m[i,] = as.matrix(pic[,(28*(i-1) + 1):(28*i)])
