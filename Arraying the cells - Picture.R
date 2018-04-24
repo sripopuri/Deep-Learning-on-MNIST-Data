@@ -22,5 +22,5 @@ for(i in 1:28){
   for(j in 1:28){
     cell[i,j] = (i-1)*28 + j
   }
-}
+} 
 View(cell)
