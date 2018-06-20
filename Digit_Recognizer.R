@@ -3,6 +3,8 @@ rm(list = ls())
 
 #Loading the required libraries
 library(ggplot2) 
+library(randomForest)
+library(caret)
 
 # Setting the required working directory
 setwd("D:/New folder/Kaggle/Digit Recognizer")
@@ -81,6 +83,7 @@ length(sums[sums == 0])
 
 # Lets check which are those columns
 to_exclude = which(sums == 0)
+to_exclude
 
 # These columns can be excluded from our classifier
 # since these columns are always 0, no matter what
@@ -88,6 +91,38 @@ to_exclude = which(sums == 0)
 var = apply(data,2,var)
 summary(var)
 
+temp = data[,-1]
+train = temp[,-to_exclude]
+
+#####
+
+# Try to remove the near zero variance
+# predictors from the dataset for predicting
+# the labels
+
+#####
+# Given Test data
+test = read.csv('test.csv',header = TRUE)
+test = test[,-to_exclude]
+
+# # Creating training and test samples from given train data
+# index = createDataPartition(data$label, 
+#                             p = 0.75, 
+#                             times = 1, 
+#                             list = F)
+# 
+# train_model = data_clean[index,]
+# test_model = data_clean[-index,]
 
 ###### Use classifier now  ######
+label = as.factor(data[,1])
+rf_model = randomForest(train, label, test, ntree = 500)
+length(rf_model$predicted)
+length(rf_model$test$predicted)
 
+
+confusionMatrix(rf_model$predicted,label)
+# 96.77% accuracy
+
+csv = data.frame(ImageId = 1:28000, Label = rf_model$test$predicted)
+submission = write.csv(csv,'Submission.csv',row.names = FALSE)
